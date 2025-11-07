@@ -2,7 +2,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { ErrorFallback } from '../common/components/ErrorFallback';
-// import { RepoListControls } from './RepoList/RepoListControls';
+import { RepoListControls } from './RepoList/RepoListControls';
 import { LoadingPlaceholder } from '../common/components/LoadingPlaceholder';
 import { RepoListControlsProvider } from './RepoList/RepoListControlsProvider';
 import { RepoItems } from './RepoList/RepoItems';
@@ -12,7 +12,7 @@ export function RepoList() {
   return (
     <RepoListControlsProvider>
       <div>
-        {/* <RepoListControls /> */}
+        <RepoListControls />
         <QueryErrorResetBoundary>
           {({ reset }) => (
             <ErrorBoundary fallbackRender={ErrorFallback} onReset={reset}>

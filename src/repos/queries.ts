@@ -10,10 +10,8 @@ const fetchRepos = async ({
   sortBy,
   orderBy,
 }: FetchReposParams): Promise<GitHubSearchResponse> => {
-  // encodeURIComponent('GitHub language:javascript')
-
   const params = new URLSearchParams({
-    q: `${searchString}language:${language}`,
+    q: `${searchString} language:${language}`,
     sort: sortBy,
     order: orderBy,
     per_page: '10',
