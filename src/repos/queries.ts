@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { type GitHubSearchResponse, type FetchReposParams } from './types';
 
 const SEARCH_BASE_URL = 'https://api.github.com/search';
@@ -9,13 +9,16 @@ const fetchRepos = async ({
   language,
   sortBy,
   orderBy,
-}: FetchReposParams): Promise<GitHubSearchResponse> => {
+  pageParam = 1,
+}: FetchReposParams & {
+  pageParam?: number;
+}): Promise<GitHubSearchResponse> => {
   const params = new URLSearchParams({
     q: `${searchString} language:${language}`,
     sort: sortBy,
     order: orderBy,
     per_page: '10',
-    page: '1',
+    page: pageParam.toString(),
   });
   const response = await fetch(`${REPOS_ENDPOINT}?${params.toString()}`);
 
@@ -26,9 +29,19 @@ const fetchRepos = async ({
   return response.json() as Promise<GitHubSearchResponse>;
 };
 
-// TODO: use useSuspenseInfiniteQuery and add load more button
 export const useReposQuery = (params: FetchReposParams) =>
-  useSuspenseQuery({
+  useSuspenseInfiniteQuery({
     queryKey: ['repos', params],
-    queryFn: () => fetchRepos(params),
+    queryFn: ({ pageParam }) => fetchRepos({ ...params, pageParam }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const totalFetched = allPages.reduce(
+        (sum, page) => sum + page.items.length,
+        0,
+      );
+      if (totalFetched < lastPage.total_count) {
+        return allPages.length + 1;
+      }
+      return undefined;
+    },
   });

@@ -6,6 +6,7 @@ import { RepoListControls } from './RepoList/RepoListControls';
 import { LoadingPlaceholder } from '../common/components/LoadingPlaceholder';
 import { RepoListControlsProvider } from './RepoList/RepoListControlsProvider';
 import { RepoItems } from './RepoList/RepoItems';
+import { LoadMoreButton } from './RepoList/LoadMoreButton';
 
 export function RepoList() {
   // TODO: revise for semantic HTML
@@ -18,6 +19,7 @@ export function RepoList() {
             <ErrorBoundary fallbackRender={ErrorFallback} onReset={reset}>
               <Suspense fallback={<LoadingPlaceholder />}>
                 <RepoItems />
+                <LoadMoreButton />
               </Suspense>
             </ErrorBoundary>
           )}
