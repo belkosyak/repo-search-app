@@ -7,7 +7,7 @@ export function ErrorFallback({
     <section
       role="alert"
       aria-live="assertive"
-      className="alert alert-error flex flex-col items-center gap-4"
+      className="alert alert-error flex flex-col items-center gap-4 my-4"
     >
       <div className="flex flex-col items-center gap-2">
         <h2 className="text-lg font-semibold">Error loading repositories</h2>

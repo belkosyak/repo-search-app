@@ -43,10 +43,8 @@ export function RepoListControls() {
           'lg:flex lg:flex-row lg:items-end'
         }
       >
-        <legend className="col-span-full mb-2 lg:mb-0 lg:mr-4">
-          Filter and sort repositories
-        </legend>
         <TextSearchControl
+          id="text-search-input"
           value={searchParams.searchString}
           onChange={(value) => setSearchParam('searchString', value)}
         />
@@ -77,7 +75,7 @@ export function RepoListControls() {
         <button
           type="button"
           onClick={resetSearchParams}
-          className="btn btn-outline"
+          className="btn btn-outline sm:col-span-2 lg:col-span-1"
           aria-label="Reset all search filters and parameters"
         >
           Reset

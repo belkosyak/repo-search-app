@@ -9,12 +9,18 @@ export function LoadMoreButton() {
   }
 
   return (
-    <div aria-live="polite" aria-busy={isFetchingNextPage}>
+    <div
+      aria-live="polite"
+      aria-busy={isFetchingNextPage}
+      className="flex justify-center mt-4"
+    >
       <button
         type="button"
         onClick={() => fetchNextPage()}
         disabled={isFetchingNextPage}
-        className={`btn btn-primary ${isFetchingNextPage ? 'btn-loading' : ''}`}
+        className={`btn btn-primary w-full sm:w-auto ${
+          isFetchingNextPage ? 'btn-loading' : ''
+        }`}
         aria-busy={isFetchingNextPage}
         aria-label={
           isFetchingNextPage
