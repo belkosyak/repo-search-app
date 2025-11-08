@@ -1,10 +1,10 @@
 import { useCallback, useMemo } from 'react';
 import { TextSearchControl } from './RepoListControls/TextSearchControl';
 import { LANGUAGES, SORT_BY, SORT_BY_LABELS } from '../constants';
-import { capitalize } from 'lodash';
 import type { FetchReposParams, SortBy } from '../types';
 import { SelectControl } from './RepoListControls/SelectControl';
 import { useRepoListControls } from './hooks/useRepoListControls';
+import { capitalize } from '../../common/utils';
 
 export function RepoListControls() {
   const { searchParams, setSearchParams, resetSearchParams } =
