@@ -197,10 +197,10 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 - Wrap `App.tsx` with `ThemeProvider`:
   - Place `ThemeProvider` as the outermost wrapper (or inside QueryClientProvider if needed)
   - Ensure it wraps all components that need theme access
-- Add `ThemeToggle` component to appropriate location:
-  - Consider adding to `RepoListControls.tsx` in the controls section
-  - Or create a header component if one exists
-  - Ensure it's accessible and visible
+- Add `ThemeToggle` component to `PageLayout.tsx`:
+  - The `PageLayout` component wraps the main content and includes the `ThemeToggle`
+  - ThemeToggle is positioned with fixed positioning in the top-right corner
+  - Ensure it's accessible and visible at all breakpoints
 
 ### 3.5 Browser Validation
 
@@ -228,10 +228,18 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ### 4.1 Layout Structure
 
+- Update `PageLayout.tsx`:
+  - Ensure ThemeToggle is properly positioned with responsive spacing
+  - Fixed positioning for theme toggle (`fixed top-4 right-4`)
+  - Responsive spacing adjustments if needed (`top-2 right-2 sm:top-4 sm:right-4`)
+  - Ensure z-index is appropriate (`z-50`) to keep toggle above other content
+  - Verify theme toggle is accessible and visible at all breakpoints
+
 - Update `RepoList.tsx`:
   - Container with max-width, centered, responsive padding
   - Mobile-first approach with proper spacing
   - Responsive padding: `p-4 sm:p-6 lg:p-8`
+  - Ensure content doesn't overlap with fixed theme toggle (add top padding if needed)
 
 ### 4.2 RepoListControls Section
 
@@ -489,7 +497,8 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 - `package.json` (add dependencies including `@i4o/catalystui`)
 - `src/index.css` (Tailwind directives + base styles)
-- `src/App.tsx` (wrap with ThemeProvider, add ThemeToggle)
+- `src/App.tsx` (wrap with ThemeProvider and PageLayout)
+- `src/common/components/PageLayout.tsx` (responsive styling for layout wrapper and ThemeToggle positioning)
 - `src/repos/RepoList.tsx` (semantic HTML + Tailwind styling)
 - `src/repos/RepoList/RepoListControls.tsx` (semantic HTML + Tailwind styling)
 - `src/repos/RepoList/RepoListControls/TextSearchControl.tsx` (Catalyst UI Input or Headless UI + Tailwind styling)

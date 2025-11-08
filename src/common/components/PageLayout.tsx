@@ -7,7 +7,7 @@ interface PageLayoutProps {
 export function PageLayout({ children }: PageLayoutProps) {
   return (
     <>
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50">
         <ThemeToggle />
       </div>
       {children}

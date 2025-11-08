@@ -11,7 +11,12 @@ import { LoadMoreButton } from './RepoList/LoadMoreButton';
 export function RepoList() {
   return (
     <RepoListControlsProvider>
-      <main>
+      <main
+        className={
+          'mx-auto max-w-7xl px-4 pt-16 pb-4 ' +
+          'sm:px-6 sm:pt-20 sm:pb-6 lg:px-8 lg:pt-24 lg:pb-8'
+        }
+      >
         <RepoListControls />
         <QueryErrorResetBoundary>
           {({ reset }) => (

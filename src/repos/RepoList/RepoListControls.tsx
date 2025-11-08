@@ -1,6 +1,6 @@
 import { useContext, useCallback, useMemo } from 'react';
 import { RepoListControlsContext } from './RepoListControlsContext';
-import { RepoTextSearchControl } from './RepoListControls/TextSearchControl';
+import { TextSearchControl } from './RepoListControls/TextSearchControl';
 import { LANGUAGES, SORT_BY, SORT_BY_LABELS } from '../constants';
 import { capitalize } from 'lodash';
 import type { FetchReposParams, SortBy } from '../types';
@@ -38,9 +38,16 @@ export function RepoListControls() {
   );
   return (
     <section aria-label="Repository search and filter controls">
-      <fieldset>
-        <legend>Filter and sort repositories</legend>
-        <RepoTextSearchControl
+      <fieldset
+        className={
+          'grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 ' +
+          'lg:flex lg:flex-row lg:items-end'
+        }
+      >
+        <legend className="col-span-full mb-2 lg:mb-0 lg:mr-4">
+          Filter and sort repositories
+        </legend>
+        <TextSearchControl
           value={searchParams.searchString}
           onChange={(value) => setSearchParam('searchString', value)}
         />
