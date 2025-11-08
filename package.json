@@ -26,7 +26,6 @@
   "dependencies": {
     "@headlessui/react": "2.2.9",
     "@heroicons/react": "2.2.0",
-    "@i4o/catalystui": "0.9.3",
     "@tanstack/react-query": "5.90.7",
     "lodash": "4.17.21",
     "react": "18.3.1",
@@ -47,6 +46,7 @@
     "@types/react-dom": "18.3.7",
     "@vitejs/plugin-react": "5.0.4",
     "autoprefixer": "10.4.21",
+    "daisyui": "5.4.7",
     "eslint": "9.36.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "5.5.4",

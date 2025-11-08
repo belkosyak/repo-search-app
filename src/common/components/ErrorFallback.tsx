@@ -1,5 +1,3 @@
-import { Button } from '@i4o/catalystui';
-
 export function ErrorFallback({
   resetErrorBoundary,
 }: {
@@ -11,12 +9,14 @@ export function ErrorFallback({
       <p>
         There was an error while loading the repositories. Please try again.
       </p>
-      <Button
+      <button
+        type="button"
         onClick={() => resetErrorBoundary()}
-        ariaLabel="Retry loading repositories"
+        className="btn btn-primary"
+        aria-label="Retry loading repositories"
       >
         Try again
-      </Button>
+      </button>
     </section>
   );
 }

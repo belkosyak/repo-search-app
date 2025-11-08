@@ -1,5 +1,4 @@
 import { useRepoList } from './useRepoList';
-import { Button } from '@i4o/catalystui';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
 export function LoadMoreButton() {
@@ -11,13 +10,13 @@ export function LoadMoreButton() {
 
   return (
     <div aria-live="polite" aria-busy={isFetchingNextPage}>
-      <Button
+      <button
+        type="button"
         onClick={() => fetchNextPage()}
         disabled={isFetchingNextPage}
-        loading={isFetchingNextPage}
-        loadingText="Loading..."
+        className={`btn btn-primary ${isFetchingNextPage ? 'btn-loading' : ''}`}
         aria-busy={isFetchingNextPage}
-        ariaLabel={
+        aria-label={
           isFetchingNextPage
             ? 'Loading more repositories'
             : 'Load more repositories'
@@ -34,7 +33,7 @@ export function LoadMoreButton() {
         ) : (
           'Load More'
         )}
-      </Button>
+      </button>
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import { Button } from '@i4o/catalystui';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 import { useTheme } from './useTheme';
 
@@ -7,10 +6,11 @@ export function ThemeToggle() {
   const isDark = theme === 'dark';
 
   return (
-    <Button
+    <button
+      type="button"
       onClick={toggleTheme}
-      ariaLabel={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="transition-colors p-2"
+      className="btn btn-circle btn-ghost transition-colors"
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {isDark ? (
         <SunIcon
@@ -23,6 +23,6 @@ export function ThemeToggle() {
           aria-hidden="true"
         />
       )}
-    </Button>
+    </button>
   );
 }
