@@ -2,7 +2,7 @@
 
 ## Overview
 
-This plan outlines the implementation of responsive styling using Tailwind CSS, Headless UI components with Catalyst UI for default styling, semantic HTML improvements, accessibility enhancements, and dark/light mode toggle functionality. The connected internal browser will be used to validate changes throughout the implementation process.
+This plan outlines the implementation of responsive styling using Tailwind CSS, DaisyUI components for default styling, semantic HTML improvements, accessibility enhancements, and dark/light mode toggle functionality. The connected internal browser will be used to validate changes throughout the implementation process.
 
 ---
 
@@ -11,32 +11,33 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 ### 1.1 Install Dependencies
 
 - Install `tailwindcss`, `postcss`, `autoprefixer` as dev dependencies
-- Install `@headlessui/react` for accessible UI components (required by Catalyst UI)
+- Install `daisyui` as a dev dependency (DaisyUI plugin for Tailwind CSS)
 - Install `@heroicons/react` for icons (sun/moon for theme toggle)
-- Install `@i4o/catalystui` for default styling of Headless UI components (provides pre-styled components built on Headless UI and Tailwind CSS)
-- **Note**: Catalyst UI requires React 18.x, so ensure React and react-dom are at version 18.3.1 or compatible
-- **Note**: Catalyst UI provides styled versions of Headless UI components (Button, Listbox, Input, etc.) with default Tailwind CSS styling
+- **Note**: DaisyUI is installed as an npm package and configured in `tailwind.config.js` as a plugin
+- **Note**: DaisyUI provides component utility classes that extend Tailwind CSS
+- **Note**: Ensure React and react-dom are at version 18.3.1 or compatible
 
 ### 1.2 Configure Tailwind CSS
 
 - Create `tailwind.config.js` with:
   - Dark mode: `'class'` strategy
-  - Content paths for scanning all component files (including Catalyst UI components from `node_modules/@i4o/catalystui`)
+  - Content paths for scanning all component files
+  - DaisyUI plugin configuration (`plugins: [require('daisyui')]`)
   - Custom theme extensions if needed
 - Create `postcss.config.js` with Tailwind and Autoprefixer plugins
 - Update `src/index.css`:
   - Remove existing styles
   - Add Tailwind directives (`@import "tailwindcss"` for Tailwind v4, or `@tailwind base`, `@tailwind components`, `@tailwind utilities` for v3)
   - Add base styles for dark mode support
-  - **Note**: Catalyst UI components use Tailwind CSS classes and will automatically work with your Tailwind configuration
+  - **Note**: DaisyUI components use Tailwind CSS utility classes and will automatically work with your Tailwind configuration
 
 ### 1.3 Browser Validation
 
 - Start dev server and verify Tailwind is working
 - Check browser console for any errors
 - Verify base styles are applied
-- Verify Catalyst UI components can be imported (test import in a component)
-- Check that Tailwind CSS is processing Catalyst UI component classes correctly
+- Reference DaisyUI documentation (https://daisyui.com/components/) to familiarize with available components
+- Verify that Tailwind CSS is processing DaisyUI component classes correctly
 
 ---
 
@@ -58,36 +59,34 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ### 2.3 TextSearchControl.tsx
 
-- Use Catalyst UI `Input` component (from `@i4o/catalystui`) for default styling, or use native input with proper label association
-- If using Catalyst UI `Input`:
-  - Import `Input` from `@i4o/catalystui`
-  - Use `Field` and `Label` components from Headless UI for proper label association
-  - Catalyst UI Input provides default styling with Tailwind CSS classes
-- If using native input:
-  - Add proper `<label>` element (nested or with `htmlFor` matching input `id`)
-  - Ensure input has proper `id` attribute
-  - Add ARIA attributes if needed (`aria-label`, `aria-describedby`)
+- Use DaisyUI Input classes (`input`, `input-bordered`, etc.) for default styling
+- Reference DaisyUI Input documentation: https://daisyui.com/components/input/
+- Apply DaisyUI input classes to native `<input>` element
+- Add proper `<label>` element (nested or with `htmlFor` matching input `id`)
+- Ensure input has proper `id` attribute
+- Add ARIA attributes if needed (`aria-label`, `aria-describedby`)
 - Ensure input is properly associated with label for screen readers
 - **Note**: Label text can be optimized according to best UX practices for better clarity
+- **Note**: DaisyUI classes are applied directly to HTML elements in React components
 
 ### 2.4 SelectControl.tsx
 
-- Replace native `<select>` with Catalyst UI `Listbox` components (from `@i4o/catalystui`)
-- Import Catalyst UI Listbox components: `Listbox`, `ListboxButton`, `ListboxOption`, `ListboxOptions` from `@i4o/catalystui`
-- Import Headless UI `Field` and `Label` components from `@headlessui/react` for proper label association
+- Use DaisyUI Select classes (`select`, `select-bordered`, etc.)
+- Reference DaisyUI Select documentation: https://daisyui.com/components/select/
+- Apply DaisyUI select classes to native `<select>` element
+- Use semantic `<label>` element with proper association (nested or `htmlFor`/`id`)
 - Structure:
-  - Wrap in `Field` component from Headless UI
-  - Use `Label` component from Headless UI for the label text
-  - Use Catalyst UI `Listbox` with `ListboxButton`, `ListboxOptions`, and `ListboxOption` components
-- Catalyst UI Listbox provides:
-  - Default Tailwind CSS styling for button trigger and dropdown menu
-  - Proper accessibility attributes (handled by underlying Headless UI)
-  - Keyboard navigation support (handled by Headless UI)
-  - Dark mode support (via Tailwind dark mode classes)
+  - Use semantic `<label>` for the label text
+  - Use DaisyUI styled select component or native `<select>` with DaisyUI classes
+- DaisyUI Select components provide:
+  - Default Tailwind CSS styling for select element
+  - Dark mode support (via DaisyUI theme system)
   - Smooth transitions and animations
-- Maintain proper form semantics with `name` attribute on Listbox component
+- Maintain proper form semantics with `name` attribute
+- Add proper ARIA attributes for accessibility
 - Customize styling with additional Tailwind classes where needed
 - **Note**: Label text can be optimized according to best UX practices for better clarity
+- **Note**: DaisyUI classes are applied directly to HTML elements in React components
 
 ### 2.5 RepoItems.tsx
 
@@ -100,38 +99,44 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ### 2.6 LoadMoreButton.tsx
 
-- Use Catalyst UI `Button` component (from `@i4o/catalystui`) for default styling
-- Import `Button` from `@i4o/catalystui`
-- Catalyst UI Button provides:
+- Use DaisyUI Button classes (`btn`, `btn-primary`, etc.) for default styling
+- Reference DaisyUI Button documentation: https://daisyui.com/components/button/
+- Apply DaisyUI button classes to native `<button>` element
+- DaisyUI Button provides:
   - Default Tailwind CSS styling with proper padding, borders, and colors
-  - Built-in disabled state styling
-  - Dark mode support
+  - Dark mode support (via DaisyUI theme system)
   - Focus states and hover effects
+  - Loading state support (`btn-loading` class)
 - Add loading state with spinner icon (from Heroicons) and proper ARIA attributes
 - Add `aria-busy` and `aria-live` for loading state announcements
-- Ensure proper disabled state handling (Catalyst UI Button handles this, but verify ARIA attributes)
+- Ensure proper disabled state handling with DaisyUI classes and ARIA attributes
 - Customize with additional Tailwind classes for sizing, spacing, or layout as needed
+- **Note**: DaisyUI classes are applied directly to HTML elements in React components
 
 ### 2.7 ErrorFallback.tsx
 
 - Use semantic `<section>` or `<article>` element
 - Add proper heading (`<h1>` or `<h2>`) for error message
-- Use Catalyst UI `Button` component (from `@i4o/catalystui`) for retry button
-- Import `Button` from `@i4o/catalystui`
-- Catalyst UI Button provides default styling that matches other buttons in the app
+- Use DaisyUI Button classes (`btn`) for retry button
+- Reference DaisyUI Button documentation: https://daisyui.com/components/button/
+- Apply DaisyUI button classes to native `<button>` element
+- DaisyUI Button provides default styling that matches other buttons in the app
 - Add `role="alert"` or `aria-live="assertive"` for error announcements
 - Ensure error message is properly announced to screen readers
 - Customize button appearance with Tailwind classes if needed (e.g., variant styles)
+- **Note**: DaisyUI classes are applied directly to HTML elements in React components
 
 ### 2.8 LoadingPlaceholder.tsx
 
+- Use DaisyUI Loading/Spinner classes if available
+- Reference DaisyUI documentation for loading components: https://daisyui.com/components/
 - Add proper loading indicator with spinner animation
-- Use Tailwind CSS animations or CSS for spinner (Catalyst UI doesn't provide a loading spinner component)
-- Consider using Heroicons spinner icon or create custom spinner with Tailwind
+- Use Tailwind CSS animations or DaisyUI loading classes for spinner
+- Consider using Heroicons spinner icon or DaisyUI loading component
 - Add `aria-live="polite"` for screen reader announcements
 - Use semantic structure for loading state
 - Add descriptive text for screen readers
-- Style with Tailwind CSS classes for consistent appearance with rest of app
+- Style with Tailwind CSS classes and DaisyUI classes for consistent appearance with rest of app
 
 ### 2.9 Browser Validation
 
@@ -139,9 +144,9 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 - Verify semantic HTML structure in browser Elements panel
 - Test keyboard navigation through all interactive elements
 - Verify screen reader compatibility (if available)
-- Verify Catalyst UI components render correctly with default styling
-- Check that all Catalyst UI components have proper ARIA attributes (should be handled automatically)
-- Test that Catalyst UI Button, Listbox, and Input components are accessible
+- Verify DaisyUI components render correctly with default styling
+- Check that all DaisyUI components have proper ARIA attributes
+- Test that DaisyUI Button, Select, and Input components are accessible
 
 ---
 
@@ -149,11 +154,10 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ### Overview
 
-**Important Note:** Neither Catalyst UI nor Headless UI provide built-in theme management components or infrastructure. Both libraries are designed to work with Tailwind CSS's dark mode feature, which uses the `dark:` variant and requires the `dark` class to be applied to a root element (typically `<html>` or `<body>`).
+**Important Note:** DaisyUI components are designed to work with Tailwind CSS's dark mode feature and DaisyUI's theme system, which uses the `dark:` variant and requires the `dark` class to be applied to a root element (typically `<html>` or `<body>`).
 
-- **Catalyst UI:** Provides styled components built on Headless UI and Tailwind CSS, but does not include theme management infrastructure
-- **Headless UI:** Provides unstyled, accessible components without theme management capabilities
-- **Implementation Approach:** Custom React Context-based solution that works with Tailwind CSS's `class` strategy (already configured in `tailwind.config.js`)
+- **DaisyUI:** Provides styled components built with Tailwind CSS and includes theme management capabilities
+- **Implementation Approach:** Custom React Context-based solution that works with Tailwind CSS's `class` strategy (already configured in `tailwind.config.js`) and DaisyUI's theme system
 
 **Alternative Libraries (Optional):**
 
@@ -169,13 +173,15 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
   - `useEffect` to apply/remove `dark` class on document root (`<html>` or `<body>`)
   - Persist theme preference to localStorage
   - System preference detection on initial load (optional, using `window.matchMedia('(prefers-color-scheme: dark)')`)
-  - **Important:** Apply `dark` class to `<html>` element (not just a container) so that Headless UI components rendered outside the main DOM (like modals/dialogs) also receive dark mode styles
+  - **Important:** Apply `dark` class to `<html>` element (not just a container) so that all components rendered outside the main DOM (like modals/dialogs) also receive dark mode styles
   - Handle SSR-safe implementation (check for `window`/`document` availability)
 
 ### 3.2 Theme Toggle Component
 
 - Create `src/theme/ThemeToggle.tsx`:
-  - Use Catalyst UI `Button` component (from `@i4o/catalystui`) for consistent styling
+  - Use DaisyUI Button classes (`btn`) for consistent styling
+  - Reference DaisyUI Button documentation: https://daisyui.com/components/button/
+  - Apply DaisyUI button classes to native `<button>` element
   - Toggle button with sun/moon icons from Heroicons (`SunIcon` for light mode, `MoonIcon` for dark mode)
   - Accessible with proper ARIA labels (`aria-label` for screen readers, e.g., "Toggle dark mode")
   - Smooth transitions between states (can use Tailwind transition classes like `transition-colors`)
@@ -206,7 +212,7 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 - Test theme toggle functionality:
   - Click toggle button and verify theme changes
-  - Check that all components update correctly (including Catalyst UI components)
+  - Check that all components update correctly (including DaisyUI components)
 - Verify `dark` class is applied/removed from root element:
   - Inspect `<html>` element in DevTools
   - Verify class is present in dark mode, absent in light mode
@@ -218,7 +224,7 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 - Verify smooth transitions:
   - Check that color changes are smooth (not jarring)
   - Verify no flash of incorrect theme on page load
-- Test with Headless UI components:
+- Test with all components:
   - Open dropdowns/modals and verify they respect dark mode
   - Check that components rendered outside main DOM tree (if any) receive dark mode styles
 
@@ -252,47 +258,56 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ### 4.3 TextSearchControl
 
-- Use Catalyst UI `Input` component (from `@i4o/catalystui`) for default styling
-- Import `Input` from `@i4o/catalystui`
-- Catalyst UI Input provides:
+- Use DaisyUI Input classes (`input`, `input-bordered`, etc.) for default styling
+- Reference DaisyUI Input documentation: https://daisyui.com/components/input/
+- Apply DaisyUI input classes to native `<input>` element
+- DaisyUI Input provides:
   - Default Tailwind CSS styling with proper padding, borders, and colors
   - Built-in focus states
-  - Dark mode support
+  - Dark mode support (via DaisyUI theme system)
   - Consistent sizing
 - Apply responsive classes:
   - Full-width input on mobile (`w-full`)
   - Additional Tailwind classes for spacing and layout as needed
-- Customize focus ring colors with Tailwind classes if needed (Catalyst UI provides default focus styling)
-- Ensure proper label styling and spacing (using Headless UI `Field` and `Label` components)
+- Customize focus ring colors with Tailwind classes if needed
+- Ensure proper label styling and spacing (using semantic `<label>` elements)
+- **Note**: DaisyUI classes are applied directly to HTML elements in React components
 
-### 4.4 SelectControl (Headless UI Listbox with Catalyst UI)
+### 4.4 SelectControl
 
-- Use Catalyst UI `Listbox` components for default styling
-- Styled button trigger with consistent sizing (provided by Catalyst UI)
-- Dropdown menu with proper positioning (handled by Catalyst UI)
+- Use DaisyUI Select classes (`select`, `select-bordered`, etc.) for default styling
+- Reference DaisyUI Select documentation: https://daisyui.com/components/select/
+- Apply DaisyUI select classes to native `<select>` element
+- Styled select element with consistent sizing (following DaisyUI patterns)
 - Mobile-friendly touch targets (min-height: 44px)
-- Dark mode styling for both button and dropdown (provided by Catalyst UI)
-- Proper z-index for dropdown overlay (handled by Catalyst UI)
-- Smooth transitions and animations (provided by Catalyst UI)
+- Dark mode styling (using DaisyUI theme system)
+- Proper z-index for dropdown overlay if using custom dropdown
+- Smooth transitions and animations (using Tailwind utilities)
 - Customize styling with Tailwind classes where needed
+- **Note**: DaisyUI classes are applied directly to HTML elements in React components
 
 ### 4.5 Reset Button
 
-- Use Catalyst UI `Button` component (from `@i4o/catalystui`) for consistent default styling
-- Import `Button` from `@i4o/catalystui`
-- Catalyst UI Button provides:
+- Use DaisyUI Button classes (`btn`) for consistent default styling
+- Reference DaisyUI Button documentation: https://daisyui.com/components/button/
+- Apply DaisyUI button classes to native `<button>` element
+- DaisyUI Button provides:
   - Consistent styling with other buttons in the app
   - Built-in hover and focus states
-  - Dark mode support
+  - Dark mode support (via DaisyUI theme system)
   - Proper padding and sizing
 - Apply Tailwind classes for:
   - Proper spacing and alignment
   - Icon positioning if using icons from Heroicons
 - Customize with additional Tailwind classes for layout (e.g., full-width on mobile)
+- **Note**: DaisyUI classes are applied directly to HTML elements in React components
 
 ### 4.6 Repository Cards (RepoItems)
 
-- Use semantic HTML with Tailwind CSS for styling (Catalyst UI doesn't provide a Card component)
+- Use DaisyUI Card classes (`card`, `card-body`, etc.) for default styling
+- Reference DaisyUI Card documentation: https://daisyui.com/components/card/
+- Apply DaisyUI card classes to semantic HTML elements
+- Use semantic HTML with Tailwind CSS and DaisyUI classes for styling
 - Mobile: Full-width cards with padding
 - Tablet/Desktop: Grid layout:
   - Mobile: 1 column (`grid-cols-1`)
@@ -314,37 +329,43 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ### 4.7 LoadMoreButton
 
-- Use Catalyst UI `Button` component (from `@i4o/catalystui`) for default styling
-- Import `Button` from `@i4o/catalystui`
+- Use DaisyUI Button classes (`btn`, `btn-loading`, etc.) for default styling
+- Reference DaisyUI Button documentation: https://daisyui.com/components/button/
+- Apply DaisyUI button classes to native `<button>` element
 - Apply Tailwind classes for layout:
   - Centered with proper spacing (`mx-auto my-8`)
   - Full-width on mobile, auto-width on desktop (`w-full sm:w-auto`)
-- Add loading spinner animation (using Heroicons spinner icon or custom spinner)
-- Disabled state styling (provided by Catalyst UI, customize with additional Tailwind classes if needed)
-- Proper padding and sizing (provided by Catalyst UI, can be customized with Tailwind classes)
-- Dark mode compatible (provided by Catalyst UI)
+- Add loading spinner animation (using Heroicons spinner icon or DaisyUI `btn-loading` class)
+- Disabled state styling (using DaisyUI classes)
+- Proper padding and sizing (following DaisyUI patterns, can be customized with Tailwind classes)
+- Dark mode compatible (using DaisyUI theme system)
 - Show loading state with spinner icon and disable button during loading
+- **Note**: DaisyUI classes are applied directly to HTML elements in React components
 
 ### 4.8 ErrorFallback
 
-- Use Tailwind CSS for container styling (Catalyst UI doesn't provide error/alert components)
+- Use DaisyUI Alert classes (`alert`, `alert-error`, etc.) for container styling if available
+- Reference DaisyUI Alert documentation: https://daisyui.com/components/alert/
+- Apply DaisyUI alert classes to semantic HTML elements
 - Centered error message container (using Tailwind flex/grid utilities)
 - Proper spacing and typography (using Tailwind classes)
-- Use Catalyst UI `Button` component (from `@i4o/catalystui`) for retry button
-- Import `Button` from `@i4o/catalystui`
-- Catalyst UI Button provides consistent design with other buttons
-- Dark mode compatible colors (provided by Catalyst UI Button, use Tailwind classes for container)
+- Use DaisyUI Button classes (`btn`) for retry button
+- DaisyUI Button provides consistent design with other buttons
+- Dark mode compatible colors (using DaisyUI theme system)
 - Proper visual hierarchy (using Tailwind typography and spacing classes)
+- **Note**: DaisyUI classes are applied directly to HTML elements in React components
 
 ### 4.9 LoadingPlaceholder
 
-- Use Tailwind CSS for styling (Catalyst UI doesn't provide a loading component)
+- Use DaisyUI Loading/Spinner classes if available
+- Reference DaisyUI documentation for loading components: https://daisyui.com/components/
+- Use Tailwind CSS and DaisyUI classes for styling
 - Centered loading indicator (using Tailwind flex utilities)
-- Spinner animation (using Tailwind animations or CSS, consider using Heroicons spinner icon)
+- Spinner animation (using Tailwind animations, DaisyUI classes, or Heroicons spinner icon)
 - Proper spacing (using Tailwind spacing classes)
-- Dark mode compatible (using Tailwind dark mode classes for text/background colors)
+- Dark mode compatible (using DaisyUI theme system)
 - Accessible loading announcement (using `aria-live` and descriptive text)
-- Style consistently with rest of app using Tailwind utility classes
+- Style consistently with rest of app using Tailwind utility classes and DaisyUI classes
 
 ### 4.10 Browser Validation
 
@@ -352,13 +373,13 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
   - Mobile (< 640px)
   - Tablet (640px - 1024px)
   - Desktop (> 1024px)
-- Verify all components adapt properly (including Catalyst UI components)
+- Verify all components adapt properly (including DaisyUI components)
 - Check spacing and alignment at all breakpoints
-- Test dark mode appearance (verify Catalyst UI components support dark mode correctly)
-- Verify hover and focus states (Catalyst UI components should have built-in focus states)
-- Check animations and transitions (Catalyst UI components include transitions)
-- Verify Catalyst UI Button, Input, and Listbox components render correctly at all breakpoints
-- Test that custom Tailwind classes work correctly with Catalyst UI components
+- Test dark mode appearance (verify DaisyUI components support dark mode correctly)
+- Verify hover and focus states (DaisyUI components should have built-in focus states)
+- Check animations and transitions (DaisyUI components include transitions)
+- Verify DaisyUI Button, Input, and Select components render correctly at all breakpoints
+- Test that custom Tailwind classes work correctly with DaisyUI components
 
 ---
 
@@ -370,8 +391,8 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 - Custom styles for specific component needs
 - Keep Tailwind as primary styling method
 - Only use CSS modules when absolutely necessary
-- **Note**: Catalyst UI components use Tailwind CSS classes internally, so prefer Tailwind utilities over CSS modules when possible
-- If custom CSS is needed, ensure it doesn't conflict with Catalyst UI's default styles
+- **Note**: DaisyUI components use Tailwind CSS classes, so prefer Tailwind utilities and DaisyUI classes over CSS modules when possible
+- If custom CSS is needed, ensure it doesn't conflict with DaisyUI's default styles
 
 ### 5.2 Browser Validation
 
@@ -387,10 +408,10 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 - Ensure all interactive elements are keyboard accessible
 - Proper tab order throughout the application
-- Focus indicators visible in both light and dark modes (Catalyst UI components provide built-in focus indicators)
+- Focus indicators visible in both light and dark modes (DaisyUI components provide built-in focus indicators)
 - Skip links if needed for main content
-- Escape key handling for modals/dropdowns (handled by Headless UI, which Catalyst UI components are built on)
-- Verify Catalyst UI Button, Input, and Listbox components are fully keyboard accessible
+- Escape key handling for modals/dropdowns (DaisyUI provides built-in support)
+- Verify DaisyUI Button, Input, and Select components are fully keyboard accessible
 - Test that custom interactive elements maintain proper keyboard navigation
 
 ### 6.2 Screen Reader Support
@@ -399,10 +420,10 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 - Live regions for dynamic content updates
 - Semantic HTML structure (from Phase 2)
 - Proper heading hierarchy
-- Form labels properly associated (using Headless UI `Field` and `Label` with Catalyst UI components)
-- **Note**: Catalyst UI components built on Headless UI provide proper ARIA attributes automatically
-- Verify that Catalyst UI Button, Input, and Listbox components announce correctly to screen readers
-- Test with screen reader to ensure all Catalyst UI components are accessible
+- Form labels properly associated (using semantic `<label>` elements with DaisyUI components)
+- **Note**: DaisyUI components use semantic HTML and should include proper ARIA attributes
+- Verify that DaisyUI Button, Input, and Select components announce correctly to screen readers
+- Test with screen reader to ensure all DaisyUI components are accessible
 
 ### 6.3 Color Contrast
 
@@ -410,11 +431,11 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 - Test in both light and dark modes
 - Ensure interactive elements have sufficient contrast
 - Test with browser accessibility tools
-- **Note**: Catalyst UI components use Tailwind CSS color palette which should meet contrast requirements, but verify:
+- **Note**: DaisyUI components use Tailwind CSS color palette which should meet contrast requirements, but verify:
   - Button text and backgrounds
   - Input borders and text
-  - Listbox button and option text
-- Customize Catalyst UI component colors with Tailwind classes if contrast needs improvement
+  - Select button and option text
+- Customize DaisyUI component colors with Tailwind classes or DaisyUI theme variables if contrast needs improvement
 
 ### 6.4 Browser Validation
 
@@ -449,9 +470,9 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 - Test theme persistence
 - Verify smooth transitions
 - Check for any hardcoded colors
-- **Note**: Catalyst UI components support dark mode via Tailwind's dark mode classes
-- Verify Catalyst UI Button, Input, and Listbox components switch correctly between light and dark modes
-- Test that all custom Tailwind classes used with Catalyst UI components support dark mode
+- **Note**: DaisyUI components support dark mode via DaisyUI's theme system
+- Verify DaisyUI Button, Input, and Select components switch correctly between light and dark modes
+- Test that all custom Tailwind classes used with DaisyUI components support dark mode
 - Ensure no hardcoded colors conflict with dark mode
 
 ### 7.4 Performance Check
@@ -490,23 +511,23 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 - `tailwind.config.js`
 - `postcss.config.js`
 - `src/theme/ThemeProvider.tsx` (custom React Context provider for theme management)
-- `src/theme/ThemeToggle.tsx` (toggle button component using Catalyst UI Button)
+- `src/theme/ThemeToggle.tsx` (toggle button component using DaisyUI Button classes)
 - `src/theme/useTheme.ts` (custom hook to access theme context)
 
 ### Modified Files:
 
-- `package.json` (add dependencies including `@i4o/catalystui`)
+- `package.json` (ensure @heroicons/react is installed)
 - `src/index.css` (Tailwind directives + base styles)
 - `src/App.tsx` (wrap with ThemeProvider and PageLayout)
 - `src/common/components/PageLayout.tsx` (responsive styling for layout wrapper and ThemeToggle positioning)
 - `src/repos/RepoList.tsx` (semantic HTML + Tailwind styling)
 - `src/repos/RepoList/RepoListControls.tsx` (semantic HTML + Tailwind styling)
-- `src/repos/RepoList/RepoListControls/TextSearchControl.tsx` (Catalyst UI Input or Headless UI + Tailwind styling)
-- `src/repos/RepoList/RepoListControls/SelectControl.tsx` (Catalyst UI Listbox + Tailwind styling)
-- `src/repos/RepoList/RepoItems.tsx` (semantic HTML + Tailwind styling)
-- `src/repos/RepoList/LoadMoreButton.tsx` (Catalyst UI Button + Tailwind styling)
-- `src/common/components/ErrorFallback.tsx` (Catalyst UI Button + Tailwind styling)
-- `src/common/components/LoadingPlaceholder.tsx` (Tailwind styling + spinner)
+- `src/repos/RepoList/RepoListControls/TextSearchControl.tsx` (DaisyUI Input classes + Tailwind styling)
+- `src/repos/RepoList/RepoListControls/SelectControl.tsx` (DaisyUI Select classes + Tailwind styling)
+- `src/repos/RepoList/RepoItems.tsx` (DaisyUI Card classes + Tailwind styling)
+- `src/repos/RepoList/LoadMoreButton.tsx` (DaisyUI Button classes + Tailwind styling)
+- `src/common/components/ErrorFallback.tsx` (DaisyUI Alert/Button classes + Tailwind styling)
+- `src/common/components/LoadingPlaceholder.tsx` (DaisyUI Loading classes + Tailwind styling)
 
 ---
 
@@ -531,9 +552,9 @@ Throughout the implementation, use the connected internal browser to:
 - ✅ Dark/light mode toggle works and persists
 - ✅ All components use semantic HTML
 - ✅ Accessibility standards are met (WCAG AA minimum)
-- ✅ Headless UI components are properly integrated with Catalyst UI for default styling
-- ✅ Catalyst UI Button, Input, and Listbox components are used consistently throughout
-- ✅ All Catalyst UI components support dark mode correctly
+- ✅ DaisyUI components are properly integrated for default styling
+- ✅ DaisyUI Button, Input, and Select components are used consistently throughout
+- ✅ All DaisyUI components support dark mode correctly
 - ✅ Tailwind CSS is used consistently
 - ✅ No console errors or warnings
 - ✅ Smooth animations and transitions

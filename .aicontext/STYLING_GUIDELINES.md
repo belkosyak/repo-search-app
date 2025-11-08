@@ -15,23 +15,15 @@ This document outlines the styling guidelines, libraries, and requirements for t
    - Dark mode support via `class` strategy
    - PostCSS integration via `@tailwindcss/postcss`
 
-2. **Catalyst UI** (`@i4o/catalystui@0.9.3`)
-   - Pre-styled React components built on Headless UI and Tailwind CSS
-   - Provides default styling for common UI components
-   - Components available:
-     - `Button` - Styled button component with loading states
-     - `Select` - Styled select component (different API from Headless UI Listbox)
-   - **Note**: Catalyst UI requires React 18.x
+2. **DaisyUI** (`daisyui`)
+   - Component library for Tailwind CSS
+   - Provides utility classes and component modifiers
+   - Extends Tailwind CSS with semantic component classes
+   - Components available include: Buttons, Inputs, Selects, Cards, Forms, Modals, and more
+   - All components use Tailwind CSS utility classes with DaisyUI modifiers
+   - **Note**: DaisyUI is installed as an npm package and configured in `tailwind.config.js`
 
-3. **Headless UI** (`@headlessui/react@2.2.9`)
-   - Unstyled, fully accessible UI components
-   - Provides accessibility features (ARIA attributes, keyboard navigation)
-   - Components used:
-     - `Field` - Form field wrapper
-     - `Label` - Accessible label component
-     - `Listbox`, `ListboxButton`, `ListboxOptions`, `ListboxOption` - Accessible listbox components
-
-4. **Heroicons** (`@heroicons/react@2.2.0`)
+3. **Heroicons** (`@heroicons/react@2.2.0`)
    - Icon library for React
    - Used for:
      - Theme toggle icons (sun/moon)
@@ -56,25 +48,30 @@ This document outlines the styling guidelines, libraries, and requirements for t
 
 ### Component Styling Strategy
 
-1. **Catalyst UI Components** (when available):
-   - Use Catalyst UI components for default styling
+1. **DaisyUI Components** (primary source):
+   - Use DaisyUI component classes and modifiers
+   - DaisyUI provides semantic component classes like `btn`, `input`, `select`, `card`, etc.
    - Customize with additional Tailwind classes as needed
-   - Available components: `Button`, `Select`
+   - Available components include: Buttons, Inputs, Selects, Cards, Forms, Modals, and more
+   - All DaisyUI components use Tailwind CSS utility classes with DaisyUI modifiers
+   - Reference DaisyUI documentation: https://daisyui.com/components/
 
-2. **Headless UI Components** (when Catalyst UI doesn't provide):
-   - Use Headless UI for accessibility and functionality
-   - Apply Tailwind CSS classes for styling
-   - Examples: `Listbox`, `Field`, `Label`
+2. **Custom Components** (when DaisyUI doesn't provide):
+   - Create custom components using Tailwind utility classes
+   - Follow DaisyUI design patterns and styling conventions
+   - Ensure proper semantic HTML structure
+   - Add ARIA attributes for accessibility
 
 3. **Native HTML Elements**:
-   - Style with Tailwind utility classes
+   - Style with Tailwind utility classes following DaisyUI patterns
+   - Use DaisyUI component classes where applicable
    - Ensure proper semantic HTML structure
    - Add ARIA attributes for accessibility
 
 4. **CSS Modules** (only when necessary):
    - Use sparingly for complex animations that don't fit Tailwind patterns
-   - Prefer Tailwind utilities over CSS modules
-   - Ensure no conflicts with Catalyst UI default styles
+   - Prefer Tailwind utilities and DaisyUI classes over CSS modules
+   - Ensure styling matches DaisyUI design patterns
 
 ---
 
@@ -117,17 +114,19 @@ This document outlines the styling guidelines, libraries, and requirements for t
 
 ### Buttons
 
-- **Use Catalyst UI `Button`** component for consistent styling
-- **Loading states**: Use `loading` and `loadingText` props
+- **Use DaisyUI Button classes** (`btn`, `btn-primary`, `btn-secondary`, etc.) for consistent styling
+- **Loading states**: Add spinner icons (Heroicons) with `animate-spin` class, use `btn-loading` class
 - **Icons**: Use Heroicons, position with Tailwind flex utilities
 - **Sizing**: Use Tailwind classes like `w-full sm:w-auto` for responsive sizing
+- Reference DaisyUI button documentation: https://daisyui.com/components/button/
 
 ### Form Controls
 
-- **Inputs**: Use native `<input>` with Tailwind classes (Catalyst UI doesn't provide Input component)
-- **Selects/Listboxes**: Use Headless UI `Listbox` with Tailwind styling (Catalyst UI doesn't provide Listbox)
-- **Labels**: Use Headless UI `Field` and `Label` components for proper association
-- **Focus states**: Use Tailwind focus utilities like `focus:ring-2 focus:ring-blue-600`
+- **Inputs**: Use DaisyUI Input classes (`input`, `input-bordered`, etc.)
+- **Selects**: Use DaisyUI Select classes (`select`, `select-bordered`, etc.)
+- **Labels**: Use semantic `<label>` elements with proper association (nested or `htmlFor`/`id`)
+- **Focus states**: DaisyUI provides built-in focus states, customize with Tailwind if needed
+- Reference DaisyUI form documentation: https://daisyui.com/components/input/ and https://daisyui.com/components/select/
 
 ### Cards
 
@@ -146,7 +145,7 @@ This document outlines the styling guidelines, libraries, and requirements for t
 
 - **Semantic HTML**: Use `<section>` with `role="alert"`
 - **ARIA**: Use `aria-live="assertive"` for error announcements
-- **Button**: Use Catalyst UI `Button` for retry action
+- **Button**: Use DaisyUI Button classes (`btn`) for retry action
 
 ---
 
@@ -163,7 +162,7 @@ This document outlines the styling guidelines, libraries, and requirements for t
 
 - **Focus indicators**: Ensure visible focus states in both light and dark modes
 - **Tab order**: Maintain logical tab order throughout the application
-- **Keyboard shortcuts**: Headless UI components handle keyboard navigation automatically
+- **Keyboard shortcuts**: Implement proper keyboard navigation for all interactive elements
 
 ### Screen Reader Support
 
@@ -184,10 +183,11 @@ This document outlines the styling guidelines, libraries, and requirements for t
 
 ### Component Structure
 
-- Import Catalyst UI components from `@i4o/catalystui`
-- Import Headless UI components from `@headlessui/react`
+- Use DaisyUI component classes in React components
 - Import icons from `@heroicons/react/24/outline` or `@heroicons/react/24/solid`
 - Use named exports (per coding preferences)
+- Apply DaisyUI classes directly to HTML elements in React components
+- Reference DaisyUI documentation: https://daisyui.com/components/
 
 ### Function Arguments
 
@@ -208,7 +208,7 @@ This document outlines the styling guidelines, libraries, and requirements for t
 
 - Verify contrast ratios using browser DevTools Accessibility panel
 - Test in both light and dark modes
-- Customize Catalyst UI component colors with Tailwind classes if needed
+- Customize DaisyUI component colors with Tailwind classes or DaisyUI theme variables if needed
 
 ---
 
@@ -245,30 +245,32 @@ This document outlines the styling guidelines, libraries, and requirements for t
 
 ## Best Practices
 
-1. **Consistency**: Use Catalyst UI components where available for consistent styling
+1. **Consistency**: Use DaisyUI component classes for consistent styling
 2. **Accessibility First**: Always ensure proper semantic HTML and ARIA attributes
 3. **Mobile First**: Design for mobile, then enhance for larger screens
-4. **Dark Mode**: Always include dark mode styles for all components
+4. **Dark Mode**: DaisyUI provides built-in dark mode support via theme configuration
 5. **Performance**: Let Tailwind purge unused styles in production
-6. **Maintainability**: Use Tailwind utilities over custom CSS when possible
+6. **Maintainability**: Use Tailwind utilities and DaisyUI classes over custom CSS when possible
 7. **Documentation**: Keep this file updated as styling patterns evolve
+8. **DaisyUI Integration**: Reference DaisyUI documentation regularly for component usage and theming
 
 ---
 
 ## Version Information
 
 - **Tailwind CSS**: 4.1.17
-- **Catalyst UI**: 0.9.3
-- **Headless UI**: 2.2.9
+- **DaisyUI**: (check package.json for version)
 - **Heroicons**: 2.2.0
-- **React**: 18.3.1 (required for Catalyst UI compatibility)
+- **React**: 18.3.1
 
 ---
 
 ## Notes
 
-- Catalyst UI doesn't provide all components (e.g., Input, Listbox, Card, Loading spinner)
-- When Catalyst UI components are not available, use Headless UI with Tailwind styling
-- Always verify that custom Tailwind classes work correctly with Catalyst UI components
-- Test all components in both light and dark modes
+- DaisyUI extends Tailwind CSS with component utility classes
+- Reference DaisyUI documentation (https://daisyui.com/components/) for component usage
+- Apply DaisyUI classes directly to HTML elements in React components
+- Always verify that custom Tailwind classes work correctly with DaisyUI components
+- Test all components in both light and dark modes (DaisyUI supports theme switching)
 - Ensure all interactive elements are keyboard accessible
+- DaisyUI is installed as an npm package and configured in `tailwind.config.js` as a plugin
