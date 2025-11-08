@@ -27,6 +27,9 @@ export function applyTheme(theme: Theme) {
     return;
   }
   const root = document.documentElement;
+  // Use DaisyUI's data-theme attribute for theme switching
+  root.setAttribute('data-theme', theme);
+  // Also keep dark class for Tailwind dark: variant support
   if (theme === 'dark') {
     root.classList.add('dark');
   } else {

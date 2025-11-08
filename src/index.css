@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin 'daisyui';
 
 @layer base {
   :root {
@@ -9,37 +10,23 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Use DaisyUI CSS variables for theme colors */
   html {
-    background-color: rgb(255 255 255);
-    color: rgb(17 24 39);
-  }
-
-  html.dark {
-    background-color: rgb(17 24 39);
-    color: rgb(243 244 246);
+    background-color: hsl(var(--b1));
+    color: hsl(var(--bc));
   }
 
   body {
-    background-color: rgb(255 255 255);
-    color: rgb(17 24 39);
     margin: 0;
     min-width: 320px;
     min-height: 100vh;
-  }
-
-  html.dark body {
-    background-color: rgb(17 24 39);
-    color: rgb(243 244 246);
+    background-color: inherit;
+    color: inherit;
   }
 
   #root {
-    background-color: rgb(255 255 255);
-    color: rgb(17 24 39);
     min-height: 100vh;
-  }
-
-  html.dark #root {
-    background-color: rgb(17 24 39);
-    color: rgb(243 244 246);
+    background-color: inherit;
+    color: inherit;
   }
 }

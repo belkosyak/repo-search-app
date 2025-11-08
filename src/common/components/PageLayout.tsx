@@ -7,9 +7,12 @@ interface PageLayoutProps {
 export function PageLayout({ children }: PageLayoutProps) {
   return (
     <>
-      <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50">
+      <header
+        className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50"
+        aria-label="Theme controls"
+      >
         <ThemeToggle />
-      </div>
+      </header>
       {children}
     </>
   );

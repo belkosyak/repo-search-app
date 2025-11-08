@@ -9,10 +9,10 @@ export function LoadingPlaceholder() {
       className="flex flex-col items-center justify-center py-12"
     >
       <ArrowPathIcon
-        className="h-8 w-8 animate-spin text-gray-600 dark:text-gray-400"
+        className="h-8 w-8 animate-spin text-base-content opacity-70"
         aria-hidden="true"
       />
-      <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+      <p className="mt-4 text-sm text-base-content opacity-70">
         Loading repositories...
       </p>
     </div>

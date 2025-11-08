@@ -10,13 +10,8 @@ export function TextSearchControl({
 }) {
   return (
     <Field className="w-full">
-      <Label
-        className={
-          'block text-sm font-medium leading-6 text-gray-900 ' +
-          'dark:text-gray-100 mb-1.5'
-        }
-      >
-        Search repositories
+      <Label className="label">
+        <span className="label-text">Search repositories</span>
       </Label>
       <Input
         type="text"

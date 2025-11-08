@@ -7,5 +7,13 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [daisyui],
+  plugins: [
+    daisyui({
+      themes: ['light', 'dark'],
+      darkTheme: 'dark',
+      base: true,
+      styled: true,
+      utils: true,
+    }),
+  ],
 };
