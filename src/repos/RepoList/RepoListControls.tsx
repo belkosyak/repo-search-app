@@ -5,6 +5,7 @@ import { LANGUAGES, SORT_BY, SORT_BY_LABELS } from '../constants';
 import { capitalize } from 'lodash';
 import type { FetchReposParams, SortBy } from '../types';
 import { SelectControl } from './RepoListControls/SelectControl';
+import { Button } from '@i4o/catalystui';
 
 export function RepoListControls() {
   const { searchParams, setSearchParams, resetSearchParams } = useContext(
@@ -67,7 +68,12 @@ export function RepoListControls() {
           value={searchParams.orderBy}
           onChange={(value) => setSearchParam('orderBy', value)}
         />
-        <button onClick={resetSearchParams}>Reset</button>
+        <Button
+          onClick={resetSearchParams}
+          ariaLabel="Reset all search filters and parameters"
+        >
+          Reset
+        </Button>
       </fieldset>
     </section>
   );

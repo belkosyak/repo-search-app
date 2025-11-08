@@ -30,8 +30,11 @@ export function SelectControl({
             'relative w-full cursor-default rounded-md bg-white ' +
             'py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ' +
             'ring-1 ring-inset ring-gray-300 focus:outline-none ' +
-            'focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6 ' +
-            'dark:bg-gray-800 dark:text-gray-100 dark:ring-gray-600'
+            'focus:ring-2 focus:ring-blue-600 ' +
+            'focus-visible:outline-none focus-visible:ring-2 ' +
+            'focus-visible:ring-blue-600 sm:text-sm sm:leading-6 ' +
+            'dark:bg-gray-800 dark:text-gray-100 dark:ring-gray-600 ' +
+            'dark:focus:ring-blue-500 dark:focus-visible:ring-blue-500'
           }
         >
           <span className="block truncate">
@@ -78,7 +81,8 @@ export function SelectControl({
               className={
                 'relative cursor-default select-none py-2 pl-3 pr-9 ' +
                 'text-gray-900 ui-active:bg-blue-600 ui-active:text-white ' +
-                'dark:text-gray-100 dark:ui-active:bg-blue-500'
+                'focus:outline-none focus:bg-blue-50 dark:text-gray-100 ' +
+                'dark:ui-active:bg-blue-500 dark:focus:bg-blue-900/30'
               }
             >
               <span className="block truncate ui-selected:font-semibold">

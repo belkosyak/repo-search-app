@@ -13,6 +13,10 @@ export function RepoItems() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${repo.name} - opens in new tab`}
+              className={
+                'focus:outline-none focus:ring-2 focus:ring-blue-600 ' +
+                'focus:ring-offset-2 rounded-sm dark:focus:ring-blue-500'
+              }
             >
               {repo.name}
             </a>
