@@ -6,7 +6,7 @@ export function LoadingPlaceholder() {
       role="status"
       aria-live="polite"
       aria-label="Loading repositories"
-      className="flex flex-col items-center justify-center py-12"
+      className="flex flex-col items-center justify-center py-20"
     >
       <ArrowPathIcon
         className="h-8 w-8 animate-spin text-base-content opacity-70"

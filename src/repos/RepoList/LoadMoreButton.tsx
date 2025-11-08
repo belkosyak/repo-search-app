@@ -1,4 +1,4 @@
-import { useRepoList } from './useRepoList';
+import { useRepoList } from './hooks/useRepoList';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
 export function LoadMoreButton() {

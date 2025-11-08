@@ -1,15 +1,14 @@
-import { useContext, useCallback, useMemo } from 'react';
-import { RepoListControlsContext } from './RepoListControlsContext';
+import { useCallback, useMemo } from 'react';
 import { TextSearchControl } from './RepoListControls/TextSearchControl';
 import { LANGUAGES, SORT_BY, SORT_BY_LABELS } from '../constants';
 import { capitalize } from 'lodash';
 import type { FetchReposParams, SortBy } from '../types';
 import { SelectControl } from './RepoListControls/SelectControl';
+import { useRepoListControls } from './hooks/useRepoListControls';
 
 export function RepoListControls() {
-  const { searchParams, setSearchParams, resetSearchParams } = useContext(
-    RepoListControlsContext,
-  );
+  const { searchParams, setSearchParams, resetSearchParams } =
+    useRepoListControls();
 
   const setSearchParam = useCallback(
     (param: keyof FetchReposParams, value: string) => {

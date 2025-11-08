@@ -18,7 +18,7 @@ export function ErrorFallback({
       <button
         type="button"
         onClick={() => resetErrorBoundary()}
-        className="btn btn-primary"
+        className="btn btn-outline"
         aria-label="Retry loading repositories"
       >
         Try again

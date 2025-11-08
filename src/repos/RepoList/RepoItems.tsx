@@ -1,4 +1,4 @@
-import { useRepoList } from './useRepoList';
+import { useRepoList } from './hooks/useRepoList';
 import { RepoItem } from './RepoItems/RepoItem';
 
 export function RepoItems() {
