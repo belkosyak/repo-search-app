@@ -9,10 +9,9 @@ import { RepoItems } from './RepoList/RepoItems';
 import { LoadMoreButton } from './RepoList/LoadMoreButton';
 
 export function RepoList() {
-  // TODO: revise for semantic HTML
   return (
     <RepoListControlsProvider>
-      <div>
+      <main>
         <RepoListControls />
         <QueryErrorResetBoundary>
           {({ reset }) => (
@@ -24,7 +23,7 @@ export function RepoList() {
             </ErrorBoundary>
           )}
         </QueryErrorResetBoundary>
-      </div>
+      </main>
     </RepoListControlsProvider>
   );
 }

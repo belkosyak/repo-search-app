@@ -2,7 +2,7 @@
 
 ## Overview
 
-This plan outlines the implementation of responsive styling using Tailwind CSS, Headless UI components, semantic HTML improvements, accessibility enhancements, and dark/light mode toggle functionality. The connected internal browser will be used to validate changes throughout the implementation process.
+This plan outlines the implementation of responsive styling using Tailwind CSS, Headless UI components with Catalyst UI for default styling, semantic HTML improvements, accessibility enhancements, and dark/light mode toggle functionality. The connected internal browser will be used to validate changes throughout the implementation process.
 
 ---
 
@@ -11,26 +11,32 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 ### 1.1 Install Dependencies
 
 - Install `tailwindcss`, `postcss`, `autoprefixer` as dev dependencies
-- Install `@headlessui/react` for accessible UI components
+- Install `@headlessui/react` for accessible UI components (required by Catalyst UI)
 - Install `@heroicons/react` for icons (sun/moon for theme toggle)
+- Install `@i4o/catalystui` for default styling of Headless UI components (provides pre-styled components built on Headless UI and Tailwind CSS)
+- **Note**: Catalyst UI requires React 18.x, so ensure React and react-dom are at version 18.3.1 or compatible
+- **Note**: Catalyst UI provides styled versions of Headless UI components (Button, Listbox, Input, etc.) with default Tailwind CSS styling
 
 ### 1.2 Configure Tailwind CSS
 
 - Create `tailwind.config.js` with:
   - Dark mode: `'class'` strategy
-  - Content paths for scanning all component files
+  - Content paths for scanning all component files (including Catalyst UI components from `node_modules/@i4o/catalystui`)
   - Custom theme extensions if needed
 - Create `postcss.config.js` with Tailwind and Autoprefixer plugins
 - Update `src/index.css`:
   - Remove existing styles
-  - Add Tailwind directives (`@tailwind base`, `@tailwind components`, `@tailwind utilities`)
+  - Add Tailwind directives (`@import "tailwindcss"` for Tailwind v4, or `@tailwind base`, `@tailwind components`, `@tailwind utilities` for v3)
   - Add base styles for dark mode support
+  - **Note**: Catalyst UI components use Tailwind CSS classes and will automatically work with your Tailwind configuration
 
 ### 1.3 Browser Validation
 
 - Start dev server and verify Tailwind is working
 - Check browser console for any errors
 - Verify base styles are applied
+- Verify Catalyst UI components can be imported (test import in a component)
+- Check that Tailwind CSS is processing Catalyst UI component classes correctly
 
 ---
 
@@ -52,19 +58,35 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ### 2.3 TextSearchControl.tsx
 
-- Add proper `<label>` element with `htmlFor` attribute matching input `id`
-- Ensure input has proper `id` attribute
-- Add ARIA attributes if needed (`aria-label`, `aria-describedby`)
+- Use Catalyst UI `Input` component (from `@i4o/catalystui`) for default styling, or use native input with proper label association
+- If using Catalyst UI `Input`:
+  - Import `Input` from `@i4o/catalystui`
+  - Use `Field` and `Label` components from Headless UI for proper label association
+  - Catalyst UI Input provides default styling with Tailwind CSS classes
+- If using native input:
+  - Add proper `<label>` element (nested or with `htmlFor` matching input `id`)
+  - Ensure input has proper `id` attribute
+  - Add ARIA attributes if needed (`aria-label`, `aria-describedby`)
 - Ensure input is properly associated with label for screen readers
 - **Note**: Label text can be optimized according to best UX practices for better clarity
 
 ### 2.4 SelectControl.tsx
 
-- Replace native `<select>` with Headless UI `Listbox` component
-- Ensure proper label association using `Listbox.Label`
-- Add ARIA attributes for accessibility (handled by Headless UI)
-- Ensure keyboard navigation support (handled by Headless UI)
-- Maintain proper form semantics
+- Replace native `<select>` with Catalyst UI `Listbox` components (from `@i4o/catalystui`)
+- Import Catalyst UI Listbox components: `Listbox`, `ListboxButton`, `ListboxOption`, `ListboxOptions` from `@i4o/catalystui`
+- Import Headless UI `Field` and `Label` components from `@headlessui/react` for proper label association
+- Structure:
+  - Wrap in `Field` component from Headless UI
+  - Use `Label` component from Headless UI for the label text
+  - Use Catalyst UI `Listbox` with `ListboxButton`, `ListboxOptions`, and `ListboxOption` components
+- Catalyst UI Listbox provides:
+  - Default Tailwind CSS styling for button trigger and dropdown menu
+  - Proper accessibility attributes (handled by underlying Headless UI)
+  - Keyboard navigation support (handled by Headless UI)
+  - Dark mode support (via Tailwind dark mode classes)
+  - Smooth transitions and animations
+- Maintain proper form semantics with `name` attribute on Listbox component
+- Customize styling with additional Tailwind classes where needed
 - **Note**: Label text can be optimized according to best UX practices for better clarity
 
 ### 2.5 RepoItems.tsx
@@ -78,7 +100,7 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ### 2.6 LoadMoreButton.tsx
 
-- Use Headless UI `Button` component or ensure proper button semantics
+- Use Catalyst UI `Button` component (provides default styling) or Headless UI `Button` component
 - Add loading state with spinner icon and proper ARIA attributes
 - Add `aria-busy` and `aria-live` for loading state announcements
 - Ensure proper disabled state handling with ARIA attributes
@@ -87,7 +109,7 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 - Use semantic `<section>` or `<article>` element
 - Add proper heading (`<h1>` or `<h2>`) for error message
-- Use Headless UI `Button` component for retry button
+- Use Catalyst UI `Button` component for retry button (provides default styling)
 - Add `role="alert"` or `aria-live="assertive"` for error announcements
 - Ensure error message is properly announced to screen readers
 
@@ -168,6 +190,7 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ### 4.3 TextSearchControl
 
+- Use Catalyst UI `Input` component for default styling (or apply Tailwind classes to custom input)
 - Full-width input on mobile (`w-full`)
 - Proper padding (`px-4 py-2`)
 - Border radius (`rounded-md` or `rounded-lg`)
@@ -175,22 +198,25 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 - Dark mode compatible colors
 - Proper label styling and spacing
 
-### 4.4 SelectControl (Headless UI Listbox)
+### 4.4 SelectControl (Headless UI Listbox with Catalyst UI)
 
-- Styled button trigger with consistent sizing
-- Dropdown menu with proper positioning
+- Use Catalyst UI `Listbox` components for default styling
+- Styled button trigger with consistent sizing (provided by Catalyst UI)
+- Dropdown menu with proper positioning (handled by Catalyst UI)
 - Mobile-friendly touch targets (min-height: 44px)
-- Dark mode styling for both button and dropdown
-- Proper z-index for dropdown overlay
-- Smooth transitions and animations
+- Dark mode styling for both button and dropdown (provided by Catalyst UI)
+- Proper z-index for dropdown overlay (handled by Catalyst UI)
+- Smooth transitions and animations (provided by Catalyst UI)
+- Customize styling with Tailwind classes where needed
 
 ### 4.5 Reset Button
 
-- Consistent styling with other buttons
+- Use Catalyst UI `Button` component for consistent default styling
+- Consistent styling with other buttons (provided by Catalyst UI)
 - Proper spacing and alignment
 - Icon support if needed
-- Hover and focus states
-- Dark mode compatible
+- Hover and focus states (provided by Catalyst UI)
+- Dark mode compatible (provided by Catalyst UI)
 
 ### 4.6 Repository Cards (RepoItems)
 
@@ -214,19 +240,20 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ### 4.7 LoadMoreButton
 
+- Use Catalyst UI `Button` component for default styling
 - Centered with proper spacing (`mx-auto my-8`)
 - Full-width on mobile, auto-width on desktop (`w-full sm:w-auto`)
 - Loading spinner animation
-- Disabled state styling (`opacity-50 cursor-not-allowed`)
-- Proper padding and sizing
-- Dark mode compatible
+- Disabled state styling (provided by Catalyst UI, customize with `opacity-50 cursor-not-allowed` if needed)
+- Proper padding and sizing (provided by Catalyst UI)
+- Dark mode compatible (provided by Catalyst UI)
 
 ### 4.8 ErrorFallback
 
 - Centered error message container
 - Proper spacing and typography
-- Styled retry button with consistent design
-- Dark mode compatible colors
+- Use Catalyst UI `Button` component for retry button with consistent design
+- Dark mode compatible colors (provided by Catalyst UI)
 - Proper visual hierarchy
 
 ### 4.9 LoadingPlaceholder
@@ -368,16 +395,16 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ### Modified Files:
 
-- `package.json` (add dependencies)
+- `package.json` (add dependencies including `@i4o/catalystui`)
 - `src/index.css` (Tailwind directives + base styles)
 - `src/App.tsx` (wrap with ThemeProvider, add ThemeToggle)
 - `src/repos/RepoList.tsx` (semantic HTML + Tailwind styling)
 - `src/repos/RepoList/RepoListControls.tsx` (semantic HTML + Tailwind styling)
-- `src/repos/RepoList/RepoListControls/TextSearchControl.tsx` (Headless UI + Tailwind styling)
-- `src/repos/RepoList/RepoListControls/SelectControl.tsx` (Headless UI Listbox + Tailwind styling)
+- `src/repos/RepoList/RepoListControls/TextSearchControl.tsx` (Catalyst UI Input or Headless UI + Tailwind styling)
+- `src/repos/RepoList/RepoListControls/SelectControl.tsx` (Catalyst UI Listbox + Tailwind styling)
 - `src/repos/RepoList/RepoItems.tsx` (semantic HTML + Tailwind styling)
-- `src/repos/RepoList/LoadMoreButton.tsx` (Headless UI Button + Tailwind styling)
-- `src/common/components/ErrorFallback.tsx` (semantic HTML + Tailwind styling)
+- `src/repos/RepoList/LoadMoreButton.tsx` (Catalyst UI Button + Tailwind styling)
+- `src/common/components/ErrorFallback.tsx` (Catalyst UI Button + Tailwind styling)
 - `src/common/components/LoadingPlaceholder.tsx` (Tailwind styling + spinner)
 
 ---
@@ -403,7 +430,7 @@ Throughout the implementation, use the connected internal browser to:
 - ✅ Dark/light mode toggle works and persists
 - ✅ All components use semantic HTML
 - ✅ Accessibility standards are met (WCAG AA minimum)
-- ✅ Headless UI components are properly integrated
+- ✅ Headless UI components are properly integrated with Catalyst UI for default styling
 - ✅ Tailwind CSS is used consistently
 - ✅ No console errors or warnings
 - ✅ Smooth animations and transitions

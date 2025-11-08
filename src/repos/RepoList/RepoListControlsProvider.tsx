@@ -16,7 +16,7 @@ export function RepoListControlsProvider({
   }, []);
 
   return (
-    <RepoListControlsContext
+    <RepoListControlsContext.Provider
       value={{
         searchParams,
         setSearchParams,
@@ -24,6 +24,6 @@ export function RepoListControlsProvider({
       }}
     >
       {children}
-    </RepoListControlsContext>
+    </RepoListControlsContext.Provider>
   );
 }

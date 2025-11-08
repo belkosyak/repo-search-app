@@ -1,10 +1,10 @@
 import { RepoListControlsContext } from './RepoListControlsContext';
 import { useReposQuery } from '../queries';
-import { use, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { useDebounce } from 'use-debounce';
 
 export function useRepoList() {
-  const { searchParams } = use(RepoListControlsContext);
+  const { searchParams } = useContext(RepoListControlsContext);
   const [debouncedSearchParams] = useDebounce(searchParams, 500);
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =

@@ -1,4 +1,11 @@
-import type { OrderBy } from '../../types';
+import {
+  Field,
+  Label,
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from '@headlessui/react';
 
 export function SelectControl({
   value,
@@ -13,22 +20,21 @@ export function SelectControl({
   name: string;
   label: string;
 }) {
+  const selectedOption = options.find((option) => option.value === value);
+
   return (
-    <div>
-      <label>
-        {label}
-        <select
-          name={name}
-          value={value}
-          onChange={(e) => onChange(e.target.value as OrderBy)}
-        >
+    <Field>
+      <Label>{label}</Label>
+      <Listbox value={value} onChange={onChange} name={name}>
+        <ListboxButton>{selectedOption?.label ?? 'Select...'}</ListboxButton>
+        <ListboxOptions>
           {options.map((option) => (
-            <option key={option.value} value={option.value}>
+            <ListboxOption key={option.value} value={option.value}>
               {option.label}
-            </option>
+            </ListboxOption>
           ))}
-        </select>
-      </label>
-    </div>
+        </ListboxOptions>
+      </Listbox>
+    </Field>
   );
 }

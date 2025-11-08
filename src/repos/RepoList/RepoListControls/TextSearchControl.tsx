@@ -7,14 +7,18 @@ export function RepoTextSearchControl({
 }) {
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Search by text"
-        name="text-search"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        autoFocus
-      />
+      <label>
+        Search repositories
+        <input
+          type="text"
+          placeholder="Search by text"
+          name="text-search"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          autoFocus
+          aria-label="Search repositories by text"
+        />
+      </label>
     </div>
   );
 }
