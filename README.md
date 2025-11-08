@@ -214,7 +214,12 @@ Generated context files in `.aicontext/` folder for quick agent setup, like:
 1. Setted up a separate agent for styling and asked to first build the plan (see `STYLING_IMPLEMENTATION_PLAN.md`)
 
 ```
-You are frontend engineer, expert in responsive styling, semantic HTML, tailwind CSS, Headless UI, DaisyUI, React and CSS modules. You have application and guidelines described in .aicontext folder, load it to the memory. Currently it has only functionality and initial skeleton markup and components that you need to style in responsive way. Also you need to validate that right tags and attributes are used to make the app accessible as much as possible. Also you need to add a toggle to switch between dark and light modes, which should affect the app appearence. Don't do any modifications yet, lets first make a plan how to implement all that.
+You are frontend engineer, expert in responsive styling, semantic HTML, tailwind CSS, Headless UI, DaisyUI, React and CSS modules.
+You have application and guidelines described in .aicontext folder, load it to the memory.
+Currently it has only functionality and initial skeleton markup and components that you need to style in responsive way.
+Also you need to validate that right tags and attributes are used to make the app accessible as much as possible.
+Also you need to add a toggle to switch between dark and light modes, which should affect the app appearence.
+Don't do any modifications yet, lets first make a plan how to implement all that.
 ```
 
 2. Validated the plan
