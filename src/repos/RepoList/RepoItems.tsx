@@ -6,18 +6,31 @@ export function RepoItems() {
   return (
     <div>
       {repos?.map((repo) => (
-        <a
-          href={repo.html_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          key={repo.id}
-        >
-          <div>ID: {repo.id}</div>
-          <div>Name: {repo.name}</div>
-          <div>Description: {repo.description}</div>
-          <div>Language: {repo.language}</div>
-          <div>🌟 {repo.stargazers_count}</div>
-        </a>
+        <article key={repo.id}>
+          <h2>
+            <a
+              href={repo.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${repo.name} - opens in new tab`}
+            >
+              {repo.name}
+            </a>
+          </h2>
+          {repo.description && <p>{repo.description}</p>}
+          <dl>
+            <dt>ID</dt>
+            <dd>{repo.id}</dd>
+            {repo.language && (
+              <>
+                <dt>Language</dt>
+                <dd>{repo.language}</dd>
+              </>
+            )}
+            <dt>Stars</dt>
+            <dd>🌟 {repo.stargazers_count}</dd>
+          </dl>
+        </article>
       ))}
     </div>
   );
