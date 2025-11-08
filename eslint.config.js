@@ -28,7 +28,13 @@ export default defineConfig([
       globals: globals.browser,
     },
     rules: {
-      'max-len': ['error', { code: 80 }],
+      'max-len': [
+        'error',
+        {
+          code: 80,
+          ignorePattern: '^\\s*it\\(',
+        },
+      ],
       'prettier/prettier': 'error',
     },
   },
