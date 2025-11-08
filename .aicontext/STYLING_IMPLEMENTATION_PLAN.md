@@ -147,44 +147,80 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 ## Phase 3: Dark/Light Mode Infrastructure
 
+### Overview
+
+**Important Note:** Neither Catalyst UI nor Headless UI provide built-in theme management components or infrastructure. Both libraries are designed to work with Tailwind CSS's dark mode feature, which uses the `dark:` variant and requires the `dark` class to be applied to a root element (typically `<html>` or `<body>`).
+
+- **Catalyst UI:** Provides styled components built on Headless UI and Tailwind CSS, but does not include theme management infrastructure
+- **Headless UI:** Provides unstyled, accessible components without theme management capabilities
+- **Implementation Approach:** Custom React Context-based solution that works with Tailwind CSS's `class` strategy (already configured in `tailwind.config.js`)
+
+**Alternative Libraries (Optional):**
+
+- `next-themes` is a popular library that provides a ready-made theme provider for React applications using Tailwind CSS, but it's not required for this implementation
+- A custom implementation gives full control and avoids additional dependencies
+
 ### 3.1 Theme Provider Setup
 
 - Create `src/theme/ThemeProvider.tsx`:
   - React Context for theme state management
   - `useState` for current theme ('light' | 'dark')
   - `useEffect` to read from localStorage on mount
-  - `useEffect` to apply/remove `dark` class on document root
+  - `useEffect` to apply/remove `dark` class on document root (`<html>` or `<body>`)
   - Persist theme preference to localStorage
-  - System preference detection on initial load (optional)
+  - System preference detection on initial load (optional, using `window.matchMedia('(prefers-color-scheme: dark)')`)
+  - **Important:** Apply `dark` class to `<html>` element (not just a container) so that Headless UI components rendered outside the main DOM (like modals/dialogs) also receive dark mode styles
+  - Handle SSR-safe implementation (check for `window`/`document` availability)
 
 ### 3.2 Theme Toggle Component
 
 - Create `src/theme/ThemeToggle.tsx`:
   - Use Catalyst UI `Button` component (from `@i4o/catalystui`) for consistent styling
-  - Toggle button with sun/moon icons from Heroicons
-  - Accessible with proper ARIA labels (`aria-label` for screen readers)
-  - Smooth transitions between states (can use Tailwind transition classes)
+  - Toggle button with sun/moon icons from Heroicons (`SunIcon` for light mode, `MoonIcon` for dark mode)
+  - Accessible with proper ARIA labels (`aria-label` for screen readers, e.g., "Toggle dark mode")
+  - Smooth transitions between states (can use Tailwind transition classes like `transition-colors`)
   - Positioned appropriately (header or controls area)
   - Customize button appearance with Tailwind classes (e.g., icon-only button style)
+  - Show appropriate icon based on current theme state
+  - Use `useTheme` hook to access theme context
 
-### 3.3 Theme Hook (Optional)
+### 3.3 Theme Hook
 
 - Create `src/theme/useTheme.ts`:
   - Custom hook to access theme context
   - Returns `{ theme, toggleTheme, setTheme }`
+  - Throws error if used outside ThemeProvider context
+  - Provides type safety for theme values ('light' | 'dark')
 
 ### 3.4 Integrate Theme Provider
 
-- Wrap `App.tsx` with `ThemeProvider`
-- Add `ThemeToggle` component to appropriate location (header or controls area)
+- Wrap `App.tsx` with `ThemeProvider`:
+  - Place `ThemeProvider` as the outermost wrapper (or inside QueryClientProvider if needed)
+  - Ensure it wraps all components that need theme access
+- Add `ThemeToggle` component to appropriate location:
+  - Consider adding to `RepoListControls.tsx` in the controls section
+  - Or create a header component if one exists
+  - Ensure it's accessible and visible
 
 ### 3.5 Browser Validation
 
-- Test theme toggle functionality
-- Verify `dark` class is applied/removed from root element
-- Check localStorage persistence
-- Test theme persistence across page refreshes
-- Verify smooth transitions
+- Test theme toggle functionality:
+  - Click toggle button and verify theme changes
+  - Check that all components update correctly (including Catalyst UI components)
+- Verify `dark` class is applied/removed from root element:
+  - Inspect `<html>` element in DevTools
+  - Verify class is present in dark mode, absent in light mode
+- Check localStorage persistence:
+  - Toggle theme, refresh page, verify theme persists
+  - Check `localStorage.getItem('theme')` in DevTools
+- Test theme persistence across page refreshes:
+  - Set theme, refresh, verify it's maintained
+- Verify smooth transitions:
+  - Check that color changes are smooth (not jarring)
+  - Verify no flash of incorrect theme on page load
+- Test with Headless UI components:
+  - Open dropdowns/modals and verify they respect dark mode
+  - Check that components rendered outside main DOM tree (if any) receive dark mode styles
 
 ---
 
@@ -445,9 +481,9 @@ This plan outlines the implementation of responsive styling using Tailwind CSS, 
 
 - `tailwind.config.js`
 - `postcss.config.js`
-- `src/theme/ThemeProvider.tsx`
-- `src/theme/ThemeToggle.tsx`
-- `src/theme/useTheme.ts` (optional hook)
+- `src/theme/ThemeProvider.tsx` (custom React Context provider for theme management)
+- `src/theme/ThemeToggle.tsx` (toggle button component using Catalyst UI Button)
+- `src/theme/useTheme.ts` (custom hook to access theme context)
 
 ### Modified Files:
 
