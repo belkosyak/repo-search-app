@@ -18,7 +18,7 @@ export function LoadMoreButton() {
         type="button"
         onClick={() => fetchNextPage()}
         disabled={isFetchingNextPage}
-        className={`btn btn-primary w-full sm:w-auto ${
+        className={`btn btn-primary w-full sm:w-64 lg:w-80 ${
           isFetchingNextPage ? 'btn-loading' : ''
         }`}
         aria-busy={isFetchingNextPage}
